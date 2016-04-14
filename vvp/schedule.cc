@@ -1079,7 +1079,7 @@ void schedule_simulate(void)
 	    		  v.format = vpiIntVal;
 	    		  vpi_get_value(arg2,&v);
 	    		  if(v.value.integer > 100){
-	    			  vpiHandle arg1 = vpi_handle_by_name("hw_tbv.dut.VERTEDGE.c_maxrow",NULL);
+	    			  vpiHandle arg1 = vpi_handle_by_name("hw_tbv.dut.c_maxrow",NULL);
 	  	    		  s_vpi_value one;
 	  	    		  one.format = vpiIntVal;
 	  	    		  one.value.integer = 1;

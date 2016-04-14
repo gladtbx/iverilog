@@ -36,6 +36,8 @@ unsigned long count_thread_events = 0;
   // Count the time events (A time cell created)
 unsigned long count_time_events = 0;
 
+extern bool faultInjection;
+
 
 
 /*
@@ -1070,7 +1072,19 @@ void schedule_simulate(void)
 			delete (cur);
 		  }
 	    }
-
+	   	 if(faultInjection){
+	    		  vpi_mode_flag = VPI_MODE_CALLTF;
+	    		  vpiHandle arg1 = vpi_handle_by_name("hw_tbv.clk",NULL);
+	    		  s_vpi_value one;
+	    		  one.format = vpiIntVal;
+	    		  one.value.integer = 1;
+	    		  vpi_put_value(arg1,&one,NULL,vpiNoDelay);
+	    		  //s_vpi_value v;
+	    		  //v.format = vpiIntVal;
+	    		  //vpi_get_value(arg1,&v);
+	    		  //printf("Value Format is : %d, Clock value is: %d\n", v.format, v.value.integer);
+	    		  vpi_mode_flag = VPI_MODE_NONE;
+	    }
 
 	      /* If there are no more active events, advance the event
 		 queues. If there are not events at all, then release

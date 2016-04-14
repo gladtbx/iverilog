@@ -1074,7 +1074,7 @@ void schedule_simulate(void)
 	    }
 	   	 if(faultInjection){
 	    		  vpi_mode_flag = VPI_MODE_CALLTF;
-	    		  vpiHandle arg1 = vpi_handle_by_name("hw_tbv.clk",NULL);
+	    		  vpiHandle arg1 = vpi_handle_by_name("hw_tbv.hw_dut.xfilter.r_pixel_sum",NULL);
 	    		  s_vpi_value one;
 	    		  one.format = vpiIntVal;
 	    		  one.value.integer = 1;

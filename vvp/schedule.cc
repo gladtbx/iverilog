@@ -37,6 +37,10 @@ unsigned long count_thread_events = 0;
 unsigned long count_time_events = 0;
 
 extern bool faultInjection;
+extern int starttime;
+extern int endtime;
+extern int injecttime;
+int injectedtime = 0;
 
 
 
@@ -1073,19 +1077,16 @@ void schedule_simulate(void)
 		  }
 	    }
 	   	 if(faultInjection){
-	    		  vpi_mode_flag = VPI_MODE_CALLTF;
-	    		  vpiHandle arg2 = vpi_handle_by_name("hw_tbv.dut.r_cur_row",NULL);
-	    		  s_vpi_value v;
-	    		  v.format = vpiIntVal;
-	    		  vpi_get_value(arg2,&v);
-	    		  if(v.value.integer > 100){
-	    			  vpiHandle arg1 = vpi_handle_by_name("hw_tbv.dut.c_maxrow",NULL);
-	  	    		  s_vpi_value one;
+	   		 	  vpi_mode_flag = VPI_MODE_CALLTF;
+	    		  vpiHandle arg2 = vpi_handle_by_name("hw_tbv.dut.c_xfilt_pixel0",NULL);
+	    		  s_vpi_time* vptime = new s_vpi_time;
+	    		  vpi_get_time(arg2,vptime);
+	    		  if((vptime->real>starttime) && (vptime->real < endtime) && (injectedtime < injecttime)){
+	    			  s_vpi_value one;
 	  	    		  one.format = vpiIntVal;
 	  	    		  one.value.integer = 1;
-	  	    		  vpi_put_value(arg1,&one,NULL,vpiNoDelay);
+	  	    		  vpi_put_value(arg2,&one,NULL,vpiNoDelay);
 	    		  }
-
 	    		  //printf("Value Format is : %d, Clock value is: %d\n", v.format, v.value.integer);
 	    		  vpi_mode_flag = VPI_MODE_NONE;
 	    }

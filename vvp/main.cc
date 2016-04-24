@@ -31,6 +31,7 @@
 # include  <cstdlib>
 # include  <cstring>
 # include  <unistd.h>
+# include  <limits.h>
 #ifdef CHECK_WITH_VALGRIND
 # include  <pthread.h>
 #endif
@@ -246,6 +247,9 @@ static void final_cleanup()
 
 unsigned module_cnt = 0;
 bool faultInjection = false;
+int starttime = 0;
+int endtime = INT_MAX;
+int injecttime = INT_MAX;
 const char*module_tab[64];
 
 extern void vpip_mcd_init(FILE *log);
@@ -316,7 +320,7 @@ int main(int argc, char*argv[])
         /* For non-interactive runs we do not want to run the interactive
          * debugger, so make $stop just execute a $finish. */
       stop_is_finish = false;
-      while ((opt = getopt(argc, argv, "+hil:M:m:nNsvVfF:")) != EOF) switch (opt) {
+      while ((opt = getopt(argc, argv, "+hil:M:m:nNsvVfF:S::E::T::")) != EOF) switch (opt) {
          case 'h':
            fprintf(stderr,
                    "Usage: vvp [options] input-file [+plusargs...]\n"
@@ -372,6 +376,24 @@ int main(int argc, char*argv[])
 		  break;
 	  case 'F':
 		  printf("Inject Fault According To File: %s\n", optarg);
+		  break;
+	  case 'S':
+		  if (optarg){
+			  sscanf(optarg,"%d",&starttime);
+		  }
+		  printf("Injection Starts at: %d.\n", starttime);
+		  break;
+	  case 'E':
+		  if (optarg){
+			  sscanf(optarg,"%d",&endtime);
+		  }
+		  printf("Injection Ends at: %d.\n", endtime);
+		  break;
+	  case 'T':
+		  if (optarg){
+			  sscanf(optarg,"%d",&injecttime);
+		  }
+		  printf("Inject %d times.\n", injecttime);
 		  break;
 	  default:
 	    flag_errors += 1;

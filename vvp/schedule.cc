@@ -1080,6 +1080,7 @@ void schedule_simulate(void)
 	   		 	  vpi_mode_flag = VPI_MODE_CALLTF;
 	    		  vpiHandle arg2 = vpi_handle_by_name("hw_tbv.dut.c_xfilt_pixel0",NULL);
 	    		  s_vpi_time* vptime = new s_vpi_time;
+	    		  vptime->type = vpiSimTime;
 	    		  vpi_get_time(arg2,vptime);
 	    		  if((vptime->real>starttime) && (vptime->real < endtime) && (injectedtime < injecttime)){
 	    			  s_vpi_value one;

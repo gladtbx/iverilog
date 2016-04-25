@@ -1082,7 +1082,7 @@ void schedule_simulate(void)
 	    		  s_vpi_time* vptime = new s_vpi_time;
 	    		  vptime->type = vpiSimTime;
 	    		  vpi_get_time(arg2,vptime);
-	    		  if(((vptime->real * 1000000000)>starttime) && ((vptime->real * 1000000000) < endtime) && (injectedtime < injecttime)){
+	    		  if(((vptime-> low)>starttime) && ((vptime->low) < endtime) && (injectedtime < injecttime)){
 	    			  s_vpi_value one;
 	  	    		  one.format = vpiIntVal;
 	  	    		  one.value.integer = 1;

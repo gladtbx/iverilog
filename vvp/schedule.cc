@@ -27,6 +27,7 @@
 # include  <csignal>
 # include  <cstdlib>
 # include  <cassert>
+# include  <string>
 
 # include  <iostream>
 
@@ -40,6 +41,7 @@ extern bool faultInjection;
 extern int starttime;
 extern int endtime;
 extern int injecttime;
+extern string targetName;
 int injectedtime = 0;
 
 
@@ -1078,7 +1080,8 @@ void schedule_simulate(void)
 	    }
 	   	 if(faultInjection){
 	   		 	  vpi_mode_flag = VPI_MODE_CALLTF;
-	    		  vpiHandle arg2 = vpi_handle_by_name("hw_tbv.dut.c_xfilt_pixel0",NULL);
+	   		 	  //hw_tbv.dut.c_xfilt_pixel0
+	    		  vpiHandle arg2 = vpi_handle_by_name(targetName.c_str(),NULL);
 	    		  s_vpi_time* vptime = new s_vpi_time;
 	    		  vptime->type = vpiSimTime;
 	    		  vpi_get_time(arg2,vptime);

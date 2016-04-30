@@ -32,6 +32,7 @@
 # include  <cstring>
 # include  <unistd.h>
 # include  <limits.h>
+# include  <string.h>
 #ifdef CHECK_WITH_VALGRIND
 # include  <pthread.h>
 #endif
@@ -247,6 +248,7 @@ static void final_cleanup()
 
 unsigned module_cnt = 0;
 bool faultInjection = false;
+string targetName;
 int starttime = 0;
 int endtime = INT_MAX;
 int injecttime = INT_MAX;
@@ -320,7 +322,7 @@ int main(int argc, char*argv[])
         /* For non-interactive runs we do not want to run the interactive
          * debugger, so make $stop just execute a $finish. */
       stop_is_finish = false;
-      while ((opt = getopt(argc, argv, "+hil:M:m:nNsvVfF:S::E::T::")) != EOF) switch (opt) {
+      while ((opt = getopt(argc, argv, "+hil:M:m:nNsvVfF:S::E::T::R:")) != EOF) switch (opt) {
          case 'h':
            fprintf(stderr,
                    "Usage: vvp [options] input-file [+plusargs...]\n"
@@ -394,6 +396,10 @@ int main(int argc, char*argv[])
 			  sscanf(optarg,"%d",&injecttime);
 		  }
 		  printf("Inject %d times.\n", injecttime);
+		  break;
+	  case 'R':
+		  targetName.assign(optarg);
+		  printf("Inject target: %s",targetName.c_str());
 		  break;
 	  default:
 	    flag_errors += 1;

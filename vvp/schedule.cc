@@ -1091,6 +1091,7 @@ void schedule_simulate(void)
 	    			  if(conditionName.length()!=0){
 	    				  vpiHandle conditionHandle = vpi_handle_by_name(conditionName.c_str(),NULL);;
 	    				  s_vpi_value cValue;
+	    				  cValue.format = vpiIntVal;
 	    				  vpi_get_value(conditionHandle,&cValue);
 	    				  if(cValue.value.integer == conditionValue){
 	    					  s_vpi_value one;

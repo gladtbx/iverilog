@@ -1097,7 +1097,7 @@ void schedule_simulate(void)
 	    				  if(cValue.value.integer == conditionValue){
 	    					  s_vpi_value one;
 	    					  one.format = vpiIntVal;
-	    					  one.value.integer = 1;
+	    					  one.value.integer = targetValue;
 	    					  vpi_put_value(arg2,&one,NULL,vpiNoDelay);
 	    				  }
 	    			  }

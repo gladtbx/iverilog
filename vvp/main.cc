@@ -253,6 +253,7 @@ int starttime = 0;
 int endtime = INT_MAX;
 int injecttime = INT_MAX;
 string conditionName;
+int targetValue;
 int conditionValue;
 const char*module_tab[64];
 
@@ -324,7 +325,7 @@ int main(int argc, char*argv[])
         /* For non-interactive runs we do not want to run the interactive
          * debugger, so make $stop just execute a $finish. */
       stop_is_finish = false;
-      while ((opt = getopt(argc, argv, "+hil:M:m:nNsvVfF:S::E::T::R:C:")) != EOF) switch (opt) {
+      while ((opt = getopt(argc, argv, "+hil:M:m:nNsvVfF:S::E::T::R:C:X:")) != EOF) switch (opt) {
          case 'h':
            fprintf(stderr,
                    "Usage: vvp [options] input-file [+plusargs...]\n"
@@ -415,7 +416,10 @@ int main(int argc, char*argv[])
 		  sscanf(&optarg[i],"=%d",&conditionValue);
 		  printf("Condition: %s = %d\n",conditionName.c_str(),conditionValue);
 		  break;
-
+	  case 'X':
+		  sscanf(optarg,"%x",&targetValue);
+		  printf("Set to value: %x\n",targetValue);
+		  break;
 	  default:
 	    flag_errors += 1;
       }

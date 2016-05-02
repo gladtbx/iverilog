@@ -44,6 +44,7 @@ extern int injecttime;
 extern string targetName;
 extern string conditionName;
 extern int conditionValue;
+extern int targetValue;
 int injectedtime = 0;
 
 
@@ -1103,7 +1104,7 @@ void schedule_simulate(void)
 	    			  else{
 	    				  s_vpi_value one;
 						  one.format = vpiIntVal;
-						  one.value.integer = 1;
+						  one.value.integer = targetValue;
 						  vpi_put_value(arg2,&one,NULL,vpiNoDelay);
 	    			  }
 	    		  }

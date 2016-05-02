@@ -42,6 +42,8 @@ extern int starttime;
 extern int endtime;
 extern int injecttime;
 extern string targetName;
+extern string conditionName;
+extern int conditionValue;
 int injectedtime = 0;
 
 
@@ -1086,10 +1088,23 @@ void schedule_simulate(void)
 	    		  vptime->type = vpiSimTime;
 	    		  vpi_get_time(arg2,vptime);
 	    		  if(((vptime-> low)>starttime) && ((vptime->low) < endtime) && (injectedtime < injecttime)){
-	    			  s_vpi_value one;
-	  	    		  one.format = vpiIntVal;
-	  	    		  one.value.integer = 1;
-	  	    		  vpi_put_value(arg2,&one,NULL,vpiNoDelay);
+	    			  if(conditionName.length()!=0){
+	    				  vpiHandle conditionHandle = vpi_handle_by_name(conditionName.c_str(),NULL);;
+	    				  s_vpi_value cValue;
+	    				  vpi_get_value(conditionHandle,&cValue);
+	    				  if(cValue.value.integer == conditionValue){
+	    					  s_vpi_value one;
+	    					  one.format = vpiIntVal;
+	    					  one.value.integer = 1;
+	    					  vpi_put_value(arg2,&one,NULL,vpiNoDelay);
+	    				  }
+	    			  }
+	    			  else{
+	    				  s_vpi_value one;
+						  one.format = vpiIntVal;
+						  one.value.integer = 1;
+						  vpi_put_value(arg2,&one,NULL,vpiNoDelay);
+	    			  }
 	    		  }
 	    		  //printf("Value Format is : %d, Clock value is: %d\n", v.format, v.value.integer);
 	    		  vpi_mode_flag = VPI_MODE_NONE;

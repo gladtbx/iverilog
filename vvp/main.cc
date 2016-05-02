@@ -252,6 +252,8 @@ string targetName;
 int starttime = 0;
 int endtime = INT_MAX;
 int injecttime = INT_MAX;
+string conditionName;
+int conditionValue;
 const char*module_tab[64];
 
 extern void vpip_mcd_init(FILE *log);
@@ -322,7 +324,7 @@ int main(int argc, char*argv[])
         /* For non-interactive runs we do not want to run the interactive
          * debugger, so make $stop just execute a $finish. */
       stop_is_finish = false;
-      while ((opt = getopt(argc, argv, "+hil:M:m:nNsvVfF:S::E::T::R:")) != EOF) switch (opt) {
+      while ((opt = getopt(argc, argv, "+hil:M:m:nNsvVfF:S::E::T::R:C:")) != EOF) switch (opt) {
          case 'h':
            fprintf(stderr,
                    "Usage: vvp [options] input-file [+plusargs...]\n"
@@ -399,8 +401,21 @@ int main(int argc, char*argv[])
 		  break;
 	  case 'R':
 		  targetName.assign(optarg);
-		  printf("Inject target: %s",targetName.c_str());
+		  printf("Inject target: %s\n",targetName.c_str());
 		  break;
+	  case 'C':
+		  int i;
+		  for(i = 0; optarg[i]!='=';i++){
+			  if(i > 60){
+				  flag_errors += 1;
+				  break;
+			  }
+			  conditionName.operator +=(optarg[i]);
+		  }
+		  sscanf(&optarg[i],"=%d",&conditionValue);
+		  printf("Condition: %s = %d\n",conditionName.c_str(),conditionValue);
+		  break;
+
 	  default:
 	    flag_errors += 1;
       }

@@ -1107,6 +1107,7 @@ void schedule_simulate(void)
 						  one.value.integer = targetValue;
 						  vpi_put_value(arg2,&one,NULL,vpiNoDelay);
 	    			  }
+	    			  injectedtime++;
 	    		  }
 	    		  //printf("Value Format is : %d, Clock value is: %d\n", v.format, v.value.integer);
 	    		  vpi_mode_flag = VPI_MODE_NONE;

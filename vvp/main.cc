@@ -255,6 +255,7 @@ int injecttime = INT_MAX;
 string conditionName;
 int targetValue;
 int conditionValue;
+char conditionOper;
 const char*module_tab[64];
 
 extern void vpip_mcd_init(FILE *log);
@@ -413,8 +414,11 @@ int main(int argc, char*argv[])
 			  }
 			  conditionName.operator +=(optarg[i]);
 		  }
-		  sscanf(&optarg[i],"=%d",&conditionValue);
-		  printf("Condition: %s = %d\n",conditionName.c_str(),conditionValue);
+		  i++;
+		  conditionOper = optarg[i];
+		  i++;
+		  sscanf(&optarg[i],"%d",&conditionValue);
+		  printf("Condition: %s %c %d\n",conditionName.c_str(),conditionOper,conditionValue);
 		  break;
 	  case 'X':
 		  sscanf(optarg,"%x",&targetValue);

@@ -256,6 +256,7 @@ string conditionName;
 int targetValue;
 int conditionValue;
 char conditionOper;
+char targetOper;
 const char*module_tab[64];
 
 extern void vpip_mcd_init(FILE *log);
@@ -421,7 +422,8 @@ int main(int argc, char*argv[])
 		  printf("Condition: %s %c %d\n",conditionName.c_str(),conditionOper,conditionValue);
 		  break;
 	  case 'X':
-		  sscanf(optarg,"%x",&targetValue);
+		  targetOper = optarg[0];
+		  sscanf(&optarg[1],"%x",&targetValue);
 		  printf("Set to value: %x\n",targetValue);
 		  break;
 	  default:

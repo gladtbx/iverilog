@@ -45,6 +45,7 @@ extern string targetName;
 extern string conditionName;
 extern int conditionValue;
 extern int targetValue;
+extern char targetOper;
 extern char conditionOper;
 int injectedtime = 0;
 
@@ -1098,15 +1099,25 @@ void schedule_simulate(void)
 	    				  if((conditionOper == '=' && cValue.value.integer == conditionValue)||(conditionOper == '+' && cValue.value.integer > conditionValue)){
 	    					  s_vpi_value one;
 	    					  one.format = vpiIntVal;
-	    					  one.value.integer = targetValue;
+	    					  if(targetOper == '='){
+	    						  one.value.integer = targetValue;
+	    					  }
+	    					  else if(targetOper == '-'){
+	    						  one.value.integer -= targetValue;
+	    					  };
 	    					  vpi_put_value(arg2,&one,NULL,vpiNoDelay);
 	    				  }
 	    			  }
 	    			  else{
 	    				  s_vpi_value one;
 						  one.format = vpiIntVal;
-						  one.value.integer = targetValue;
-						  vpi_put_value(arg2,&one,NULL,vpiNoDelay);
+    					  if(targetOper == '='){
+    						  one.value.integer = targetValue;
+    					  }
+    					  else if(targetOper == '-'){
+    						  one.value.integer -= targetValue;
+    					  };
+    					  vpi_put_value(arg2,&one,NULL,vpiNoDelay);
 	    			  }
 	    			  injectedtime++;
 	    		  }

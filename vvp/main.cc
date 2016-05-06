@@ -424,7 +424,12 @@ int main(int argc, char*argv[])
 	  case 'X':
 		  targetOper = optarg[0];
 		  sscanf(&optarg[1],"%x",&targetValue);
-		  printf("Set to value: %x\n",targetValue);
+		  if(targetOper == '='){
+			  printf("Set to value: %x\n",targetValue);
+		  }
+		  else if(targetOper == '-'){
+			  printf("Value limited to %x\n",targetValue);
+		  }
 		  break;
 	  default:
 	    flag_errors += 1;
